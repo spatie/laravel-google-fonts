@@ -3,10 +3,10 @@
 namespace Spatie\GoogleFonts;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class GoogleFonts
 {

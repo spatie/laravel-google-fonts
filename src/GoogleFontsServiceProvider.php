@@ -2,9 +2,9 @@
 
 namespace Spatie\GoogleFonts;
 
+use Spatie\GoogleFonts\Commands\GoogleFontsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Spatie\GoogleFonts\Commands\GoogleFontsCommand;
 
 class GoogleFontsServiceProvider extends PackageServiceProvider
 {
