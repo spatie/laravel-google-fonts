@@ -38,7 +38,7 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
         parent::boot();
 
         Blade::directive('googlefonts', function ($expression) {
-            return "<?php echo app(Spatie\GoogleFonts\GoogleFonts)->load($expression); ?>";
+            return "<?php echo app(Spatie\GoogleFonts\GoogleFonts::class)->load($expression)->toHtml(); ?>";
         });
     }
 }
