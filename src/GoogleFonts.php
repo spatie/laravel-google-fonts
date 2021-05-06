@@ -2,65 +2,99 @@
 
 namespace Spatie\GoogleFonts;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\HtmlString;
+use Exception;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class GoogleFonts
 {
-    private const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15';
+    public function __construct(
+        private Filesystem $filesystem,
+        private string $userAgent,
+        private bool $fallback,
+    ) {}
 
-    public function load(string $url): void
+    public function load(string $url, bool $fresh = false): Fonts {
+        try {
+            if (! $fresh && $fonts = $this->loadLocal($url)) {
+                return $fonts;
+            }
+
+            return $this->loadFresh($url);
+        } catch (Exception $exception) {
+            if (! $this->fallback) {
+                throw $exception;
+            }
+
+            return new Fonts(googleFontsUrl: $url);
+        }
+    }
+
+    private function loadLocal(string $url): ?Fonts
     {
-        $css = Http::withHeaders(['User-Agent' => self::USER_AGENT])
+        if (! $this->filesystem->exists($this->path($url, 'fonts.css'))) {
+            return null;
+        }
+
+        $localizedCss = $this->filesystem->get($this->path($url, 'fonts.css'));
+
+        return new Fonts(
+            googleFontsUrl: $url,
+            localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
+            localizedCss: $localizedCss,
+        );
+    }
+
+    private function loadFresh(string $url): Fonts
+    {
+        $css = Http::withHeaders(['User-Agent' => $this->userAgent])
             ->get($url)
             ->body();
 
-        $css = $this->extractSrcUrls($css)->reduce(function (string $css, string $src) use ($url) {
-            $filename = $this->filename($src);
+        $localizedCss = $css;
 
-            Storage::disk('public')->put(
-                $this->path($url, $filename),
-                Http::get($src)->body()
+        foreach ($this->extractFontUrls($css) as $fontUrl) {
+            $localizedFontUrl = $this->localizeFontUrl($fontUrl);
+
+            $this->filesystem->put(
+                $this->path($url, $localizedFontUrl),
+                Http::get($fontUrl)->body()
             );
 
-            return str_replace($src, '/storage/google-fonts/' . $filename, $css);
-        }, $css);
+            $localizedCss = str_replace(
+                $fontUrl,
+                $this->filesystem->url($this->path($url, $localizedFontUrl)),
+                $localizedCss
+            );
+        }
 
-        Storage::disk('public')->put(
-            $this->path($url, 'fonts.css'),
-            $css
+        $this->filesystem->put($this->path($url, 'fonts.css'), $localizedCss);
+
+        return new Fonts(
+            googleFontsUrl: $url,
+            localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
+            localizedCss: $localizedCss,
         );
     }
 
-    public function inline(string $url): HtmlString
+    private function extractFontUrls(string $css): array
     {
-        $this->load($url);
+        $matches = [];
+        preg_match_all('/url\((https:\/\/fonts.gstatic.com\/[^)]+)\)/', $css, $matches);
 
-        return new HtmlString(
-            '<style>' . Storage::disk('public')->get($this->path($url, 'fonts.css')) . '</style>'
-        );
+        return $matches[1] ?? [];
     }
 
-    private function path(string $url, string $path = ''): string
-    {
-        return config('google-fonts.directory') . '/' .  Str::slug($url) . '/' . $path;
-    }
-
-    private function filename(string $path): string
+    private function localizeFontUrl(string $path): string
     {
         [$path, $extension] = explode('.', str_replace('https://fonts.gstatic.com/', '', $path));
 
         return implode('.', [Str::slug($path), $extension]);
     }
 
-    private function extractSrcUrls(string $css): Collection
+    private function path(string $url, string $path = ''): string
     {
-        $matches = [];
-        preg_match_all('/url\((https:\/\/fonts.gstatic.com\/[^)]+)\)/', $css, $matches);
-
-        return collect($matches[1] ?? []);
+        return '/fonts/' . substr(md5($url), 0, 10) . '/' . $path;
     }
 }

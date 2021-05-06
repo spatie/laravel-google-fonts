@@ -2,21 +2,32 @@
 
 namespace Spatie\GoogleFonts;
 
-use Spatie\GoogleFonts\Commands\GoogleFontsCommand;
+use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Foundation\Application;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Spatie\GoogleFonts\Commands\GoogleFontsCommand as FetchGoogleFontsCommand;
 
 class GoogleFontsServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package
-            ->name('laravel-google-fonts')
-            ->hasCommand(GoogleFontsCommand::class);
+            ->name('google-fonts')
+            ->hasConfigFile()
+            ->hasCommand(FetchGoogleFontsCommand::class);
+    }
+
+    public function register()
+    {
+        parent::register();
+
+        $this->app->singleton(GoogleFonts::class, function (Application $app) {
+            return new GoogleFonts(
+                $app->make(FilesystemManager::class)->disk($app->config->get('google-fonts.disk')),
+                $app->config->get('google-fonts.user_agent'),
+                $app->config->get('google-fonts.fallback'),
+            );
+        });
     }
 }

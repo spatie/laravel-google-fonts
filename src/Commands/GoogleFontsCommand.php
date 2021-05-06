@@ -6,12 +6,12 @@ use Illuminate\Console\Command;
 
 class GoogleFontsCommand extends Command
 {
-    public $signature = 'laravel-google-fonts';
+    public $signature = 'google-fonts:fetch';
 
-    public $description = 'My command';
+    public $description = 'Fetch Google Fonts and store them on a local disk';
 
     public function handle()
     {
-        $this->comment('All done');
+        // @todo
     }
 }
