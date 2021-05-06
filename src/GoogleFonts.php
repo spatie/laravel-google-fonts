@@ -11,13 +11,14 @@ class GoogleFonts
 {
     public function __construct(
         private Filesystem $filesystem,
+        private string $path,
         private string $userAgent,
         private bool $fallback,
     ) {}
 
-    public function load(string $url, bool $fresh = false): Fonts {
+    public function load(string $url, bool $force = false): Fonts {
         try {
-            if (! $fresh && $fonts = $this->loadLocal($url)) {
+            if (! $force && $fonts = $this->loadLocal($url)) {
                 return $fonts;
             }
 
@@ -95,6 +96,6 @@ class GoogleFonts
 
     private function path(string $url, string $path = ''): string
     {
-        return '/fonts/' . substr(md5($url), 0, 10) . '/' . $path;
+        return $this->path . '/' . substr(md5($url), 0, 10) . '/' . $path;
     }
 }

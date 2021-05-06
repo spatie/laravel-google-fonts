@@ -4,6 +4,7 @@ namespace Spatie\GoogleFonts;
 
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\GoogleFonts\Commands\GoogleFontsCommand as FetchGoogleFontsCommand;
@@ -24,10 +25,20 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
 
         $this->app->singleton(GoogleFonts::class, function (Application $app) {
             return new GoogleFonts(
-                $app->make(FilesystemManager::class)->disk($app->config->get('google-fonts.disk')),
-                $app->config->get('google-fonts.user_agent'),
-                $app->config->get('google-fonts.fallback'),
+                filesystem: $app->make(FilesystemManager::class)->disk($app->config->get('google-fonts.disk')),
+                path: $app->config->get('google-fonts.path'),
+                userAgent: $app->config->get('google-fonts.user_agent'),
+                fallback: $app->config->get('google-fonts.fallback'),
             );
+        });
+    }
+
+    public function boot()
+    {
+        parent::boot();
+
+        Blade::directive('googlefonts', function ($expression) {
+            return "<?php echo app(Spatie\GoogleFonts\GoogleFonts)->load($expression); ?>";
         });
     }
 }
