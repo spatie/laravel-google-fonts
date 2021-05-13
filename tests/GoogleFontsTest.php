@@ -9,9 +9,9 @@ class GoogleFontsTest extends TestCase
 {
     use MatchesSnapshots;
 
-    private string $fontsUrl;
+    protected string $fontsUrl;
 
-    private string $localPath;
+    protected string $localPath;
 
     public function setUp(): void
     {

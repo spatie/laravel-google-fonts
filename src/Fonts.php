@@ -8,9 +8,9 @@ use Illuminate\Support\HtmlString;
 class Fonts implements Htmlable
 {
     public function __construct(
-        private string $googleFontsUrl,
-        private ?string $localizedUrl = null,
-        private ?string $localizedCss = null
+        protected string $googleFontsUrl,
+        protected ?string $localizedUrl = null,
+        protected ?string $localizedCss = null
     ) {}
 
     public function inline(): HtmlString

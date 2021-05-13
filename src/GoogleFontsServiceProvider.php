@@ -19,10 +19,8 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
             ->hasCommand(FetchGoogleFontsCommand::class);
     }
 
-    public function register()
+    public function packageRegistered()
     {
-        parent::register();
-
         $this->app->singleton(GoogleFonts::class, function (Application $app) {
             return new GoogleFonts(
                 filesystem: $app->make(FilesystemManager::class)->disk($app->config->get('google-fonts.disk')),
@@ -33,10 +31,8 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
         });
     }
 
-    public function boot()
+    public function packageBooted()
     {
-        parent::boot();
-
         Blade::directive('googlefonts', function ($expression) {
             return "<?php echo app(Spatie\GoogleFonts\GoogleFonts::class)->load($expression)->toHtml(); ?>";
         });

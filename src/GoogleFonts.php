@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Http;
 class GoogleFonts
 {
     public function __construct(
-        private Filesystem $filesystem,
-        private string $path,
-        private string $userAgent,
-        private bool $fallback,
+        protected Filesystem $filesystem,
+        protected string $path,
+        protected string $userAgent,
+        protected bool $fallback,
     ) {}
 
     public function load(string $url, bool $force = false): Fonts {
@@ -32,7 +32,7 @@ class GoogleFonts
         }
     }
 
-    private function loadLocal(string $url): ?Fonts
+    protected function loadLocal(string $url): ?Fonts
     {
         if (! $this->filesystem->exists($this->path($url, 'fonts.css'))) {
             return null;
@@ -47,7 +47,7 @@ class GoogleFonts
         );
     }
 
-    private function loadFresh(string $url): Fonts
+    protected function loadFresh(string $url): Fonts
     {
         $css = Http::withHeaders(['User-Agent' => $this->userAgent])
             ->get($url)
@@ -79,7 +79,7 @@ class GoogleFonts
         );
     }
 
-    private function extractFontUrls(string $css): array
+    protected function extractFontUrls(string $css): array
     {
         $matches = [];
         preg_match_all('/url\((https:\/\/fonts.gstatic.com\/[^)]+)\)/', $css, $matches);
@@ -87,14 +87,14 @@ class GoogleFonts
         return $matches[1] ?? [];
     }
 
-    private function localizeFontUrl(string $path): string
+    protected function localizeFontUrl(string $path): string
     {
         [$path, $extension] = explode('.', str_replace('https://fonts.gstatic.com/', '', $path));
 
         return implode('.', [Str::slug($path), $extension]);
     }
 
-    private function path(string $url, string $path = ''): string
+    protected function path(string $url, string $path = ''): string
     {
         return $this->path . '/' . substr(md5($url), 0, 10) . '/' . $path;
     }
