@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\GoogleFonts\Exceptions\CouldNotCacheFont;
+use Spatie\GoogleFonts\GoogleFonts;
 
 class CacheGoogleFontsCommand extends Command
 {
@@ -19,33 +20,13 @@ class CacheGoogleFontsCommand extends Command
     {
         $this->info('Starting caching Google Fonts...');
 
-        $disk = $this->getDisk();
-
         collect(config('google-fonts.fonts'))
-            ->map(fn(string $fontUrl) => $this->fetchFont($fontUrl, $disk));
+            ->each(function (string $url) {
+                $this->info("Caching font `{$url}`...");
+
+                return app(GoogleFonts::class)->loadFresh($url);
+            });
 
         $this->info('All done!');
-    }
-
-    protected function getDisk(): Filesystem
-    {
-        $diskName = config('google-fonts.disk');
-
-        if (config("filesystems.disks.{$diskName}") === null) {
-            throw CouldNotCacheFont::diskNotFound($diskName);
-        }
-
-        return Storage::disk($diskName);
-    }
-
-    protected function fetchFont(string $fontUrl, Filesystem $disk): void
-    {
-        $this->comment("Start fetching font {$fontUrl}...");
-
-        $fileName = Hash::make($fontUrl) . '.css';
-
-        $path = config('google-fonts.path');
-dd($fileName, $path);
-        $disk->put("{$path}/{$fileName}", file_get_contents($path));
     }
 }
