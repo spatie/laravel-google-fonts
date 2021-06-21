@@ -17,7 +17,7 @@ If anything goes wrong in this process, the package falls back to a `<link>` tag
 
 If you want to make sure fonts are ready to go before anyone visits your site, you can prefetch them with this artisan command.
 
-```
+```bash
 php artisan google-fonts:prefetch
 ```
 
