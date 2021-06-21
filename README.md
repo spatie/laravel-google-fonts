@@ -1,3 +1,5 @@
+**PACKAGE IN DEVELOPMENT, DO NOT USE YET**
+
 # Manage self-hosted Google Fonts in Laravel apps
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-google-fonts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-fonts)
@@ -17,7 +19,7 @@ If anything goes wrong in this process, the package falls back to a `<link>` tag
 
 If you want to make sure fonts are ready to go before anyone visits your site, you can prefetch them with this artisan command.
 
-```
+```bash
 php artisan google-fonts:prefetch
 ```
 
