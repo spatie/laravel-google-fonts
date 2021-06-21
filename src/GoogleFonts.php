@@ -12,8 +12,9 @@ class GoogleFonts
     public function __construct(
         protected Filesystem $filesystem,
         protected string $path,
-        protected string $userAgent,
+        protected bool $inline,
         protected bool $fallback,
+        protected string $userAgent,
     ) {}
 
     public function load(string $url, bool $force = false): Fonts {
@@ -44,6 +45,7 @@ class GoogleFonts
             googleFontsUrl: $url,
             localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
             localizedCss: $localizedCss,
+            preferInline: $this->inline,
         );
     }
 
@@ -76,6 +78,7 @@ class GoogleFonts
             googleFontsUrl: $url,
             localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
             localizedCss: $localizedCss,
+            preferInline: $this->inline,
         );
     }
 

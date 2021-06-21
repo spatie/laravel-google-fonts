@@ -25,8 +25,9 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
             return new GoogleFonts(
                 filesystem: $app->make(FilesystemManager::class)->disk($app->config->get('google-fonts.disk')),
                 path: $app->config->get('google-fonts.path'),
-                userAgent: $app->config->get('google-fonts.user_agent'),
+                inline: $app->config->get('google-fonts.inline'),
                 fallback: $app->config->get('google-fonts.fallback'),
+                userAgent: $app->config->get('google-fonts.user_agent'),
             );
         });
     }
