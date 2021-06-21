@@ -17,12 +17,6 @@ When fonts are requested the first time, this package will scrape the CSS, fetch
 
 If anything goes wrong in this process, the package falls back to a `<link>` tag to load the fonts from Google.
 
-If you want to make sure fonts are ready to go before anyone visits your site, you can prefetch them with this artisan command.
-
-```bash
-php artisan google-fonts:prefetch
-```
-
 This command will find usages of `@googlefonts`, and cache the CSS and fonts so they're ready for use. You can commit these files in Git so the app never has to hit Google servers again.
 
 ## Why we created this package
@@ -144,6 +138,14 @@ This will inline the CSS, so the browser needs to do one less round-trip. If you
 Fonts are stored in a `fonts` folder on the `public` disk. You'll need to run `php artisan storage:link` to ensure the files can be served over HTTP. If you wish to store fonts in the git repository, make sure `storage/app/public` is not ignored.
 
 If you want to serve fonts from a CDN, you may set up a different disk configuration.
+
+## Prefetching fonts
+
+If you want to make sure fonts are ready to go before anyone visits your site, you can prefetch them with this artisan command.
+
+```bash
+php artisan google-fonts:prefetch
+```
 
 ### Caveats for legacy browsers
 
