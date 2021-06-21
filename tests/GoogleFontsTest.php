@@ -2,6 +2,8 @@
 
 namespace Spatie\GoogleFonts\Tests;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\GoogleFonts\GoogleFonts;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -9,34 +11,29 @@ class GoogleFontsTest extends TestCase
 {
     use MatchesSnapshots;
 
-    protected string $fontsUrl;
-
-    protected string $localPath;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->fontsUrl = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
-        $this->localPath = __DIR__ . '/fonts/' . substr(md5($this->fontsUrl), 0, 10);
-
-        // `shell_exec` is a lot more straightforward than `rmdir` with a non-empty directory
-        shell_exec('rm -rf ' . $this->localPath);
-    }
-
     /** @test */
     public function it_loads_google_fonts()
     {
         $fonts = app(GoogleFonts::class)->load($this->fontsUrl, forceFresh: true);
 
-        $this->assertDirectoryExists($this->localPath);
+        $expectedFileName = '952ee985ef/fonts.css';
 
-        $this->assertMatchesFileSnapshot($this->localPath . '/'. 'fonts.css');
+        $this->disk()->assertExists($expectedFileName);
 
-        $this->assertNotEmpty(glob($this->localPath . '/*.woff2'));
+        $fullCssPath = $this->disk()->path($expectedFileName);
 
-        $this->assertMatchesHtmlSnapshot((string) $fonts->link());
-        $this->assertMatchesHtmlSnapshot((string) $fonts->inline());
+        $this->assertMatchesFileSnapshot($fullCssPath);
+
+        $woff2FileCount = collect($this->disk()->allFiles())
+            ->filter(function (string $path) {
+                return Str::endsWith($path, '.woff2');
+            })
+            ->count();
+
+        $this->assertGreaterThan(0, $woff2FileCount);
+
+        $this->assertMatchesHtmlSnapshot((string)$fonts->link());
+        $this->assertMatchesHtmlSnapshot((string)$fonts->inline());
     }
 
     /** @test */
@@ -46,13 +43,15 @@ class GoogleFontsTest extends TestCase
 
         $fonts = app(GoogleFonts::class)->load('moo', forceFresh: true);
 
-        $this->assertDirectoryDoesNotExist($this->localPath);
+        $allFiles = $this->disk()->allFiles();
+
+        $this->assertCount(0, $allFiles);
 
         $fallback = <<<HTML
             <link href="moo" rel="stylesheet" type="text/css">
         HTML;
 
-        $this->assertEquals($fallback, (string) $fonts->link());
-        $this->assertEquals($fallback, (string) $fonts->inline());
+        $this->assertEquals($fallback, (string)$fonts->link());
+        $this->assertEquals($fallback, (string)$fonts->inline());
     }
 }

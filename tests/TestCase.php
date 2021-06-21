@@ -2,11 +2,24 @@
 
 namespace Spatie\GoogleFonts\Tests;
 
+use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Storage;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\GoogleFonts\GoogleFontsServiceProvider;
 
 class TestCase extends Orchestra
 {
+    protected string $fontsUrl;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->fontsUrl = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
+
+        Storage::fake(config('google-fonts.disk'));
+    }
+
     protected function getPackageProviders($app)
     {
         return [GoogleFontsServiceProvider::class];
@@ -29,5 +42,12 @@ class TestCase extends Orchestra
         config()->set('google-fonts.disk', 'fonts');
         config()->set('google-fonts.path', '');
         config()->set('google-fonts.fallback', false);
+    }
+
+    public function disk(): Filesystem
+    {
+        $diskName = config('google-fonts.disk');
+
+        return Storage::disk($diskName);
     }
 }

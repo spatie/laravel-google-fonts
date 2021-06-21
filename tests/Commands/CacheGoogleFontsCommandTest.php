@@ -8,23 +8,34 @@ use Spatie\GoogleFonts\Tests\TestCase;
 
 class CacheGoogleFontsCommandTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        config()->set('google-fonts.fonts', [
+            'code' => $this->fontsUrl,
+        ]);
+    }
+
     /** @test */
     public function it_can_cache_configured_fonts()
     {
-        $fontUrl = 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700';
-
-        $diskName = config('google-fonts.disk');
-
-        config()->set('google-fonts.fonts', [
-            'code' => $fontUrl,
-        ]);
-
-        Storage::fake($diskName);
-
-        Storage::disk($diskName)->assertMissing('50c9ec21f5/fonts.css');
+        $this->disk()->assertMissing('952ee985ef/fonts.css');
 
         $this->artisan(CacheGoogleFontsCommand::class);
 
-        Storage::disk($diskName)->assertExists('50c9ec21f5/fonts.css');
+        $this->disk()->assertExists('952ee985ef/fonts.css');
+    }
+
+    /** @test */
+    public function it_will_use_the_configured_path_when_fetching_fonts()
+    {
+        $path = 'my-path';
+
+        config()->set('google-fonts.path', $path);
+
+        $this->artisan(CacheGoogleFontsCommand::class);
+
+        $this->disk()->assertExists("{$path}/952ee985ef/fonts.css");
     }
 }
