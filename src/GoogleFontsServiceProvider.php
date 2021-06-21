@@ -7,7 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Spatie\GoogleFonts\Commands\GoogleFontsCommand as FetchGoogleFontsCommand;
+use Spatie\GoogleFonts\Commands\FetchGoogleFontsCommand;
 
 class GoogleFontsServiceProvider extends PackageServiceProvider
 {

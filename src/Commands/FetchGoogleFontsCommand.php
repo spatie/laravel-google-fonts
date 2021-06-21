@@ -4,7 +4,7 @@ namespace Spatie\GoogleFonts\Commands;
 
 use Illuminate\Console\Command;
 
-class GoogleFontsCommand extends Command
+class FetchGoogleFontsCommand extends Command
 {
     public $signature = 'google-fonts:fetch';
 
