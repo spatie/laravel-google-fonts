@@ -31,7 +31,7 @@ class CacheGoogleFontsCommand extends Command
     {
         $diskName = config('google-fonts.disk');
 
-        if (config("filesystems.disk.{$diskName}") === null) {
+        if (config("filesystems.disks.{$diskName}") === null) {
             throw CouldNotCacheFont::diskNotFound($diskName);
         }
 
@@ -45,7 +45,7 @@ class CacheGoogleFontsCommand extends Command
         $fileName = Hash::make($fontUrl) . '.css';
 
         $path = config('google-fonts.path');
-
+dd($fileName, $path);
         $disk->put("{$path}/{$fileName}", file_get_contents($path));
     }
 }
