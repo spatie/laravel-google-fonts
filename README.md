@@ -1,4 +1,4 @@
-# A package to manage self-hosted Google Fonts in Laravel applications
+# Manage self-hosted Google Fonts in Laravel apps
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-google-fonts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-fonts)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-google-fonts/run-tests?label=tests)](https://github.com/spatie/laravel-google-fonts/actions?query=workflow%3Arun-tests+branch%3Amaster)
