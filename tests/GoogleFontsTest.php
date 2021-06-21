@@ -2,7 +2,6 @@
 
 namespace Spatie\GoogleFonts\Tests;
 
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\GoogleFonts\GoogleFonts;
 use Spatie\Snapshots\MatchesSnapshots;
