@@ -24,7 +24,7 @@ class CacheGoogleFontsCommand extends Command
             ->each(function (string $url) {
                 $this->info("Caching font `{$url}`...");
 
-                return app(GoogleFonts::class)->loadFresh($url);
+                return app(GoogleFonts::class)->load($url, forceFresh: true);
             });
 
         $this->info('All done!');

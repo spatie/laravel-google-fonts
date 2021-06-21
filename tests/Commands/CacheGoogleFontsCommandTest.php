@@ -4,7 +4,6 @@ namespace Spatie\GoogleFonts\Tests\Commands;
 
 use Illuminate\Support\Facades\Storage;
 use Spatie\GoogleFonts\Commands\CacheGoogleFontsCommand;
-use Spatie\GoogleFonts\Exceptions\CouldNotCacheFont;
 use Spatie\GoogleFonts\Tests\TestCase;
 
 class CacheGoogleFontsCommandTest extends TestCase
@@ -12,26 +11,20 @@ class CacheGoogleFontsCommandTest extends TestCase
     /** @test */
     public function it_can_cache_configured_fonts()
     {
+        $fontUrl = 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700';
+
         $diskName = config('google-fonts.disk');
 
-        config()->set("filesystems.disks.{$diskName}", 'dummy-value');
-
-        Storage::fake($diskName);;
-
         config()->set('google-fonts.fonts', [
-            'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
+            'code' => $fontUrl,
         ]);
 
-        $this->artisan(CacheGoogleFontsCommand::class);
-    }
+        Storage::fake($diskName);
 
-    /** @test */
-    public function it_will_throw_an_exception_if_the_configured_disk_does_not_exist()
-    {
-        config()->set('google-fonts.disk', 'non-existing-disk');
-
-        $this->expectException(CouldNotCacheFont::class);
+        Storage::disk($diskName)->assertMissing('50c9ec21f5/fonts.css');
 
         $this->artisan(CacheGoogleFontsCommand::class);
+
+        Storage::disk($diskName)->assertExists('50c9ec21f5/fonts.css');
     }
 }

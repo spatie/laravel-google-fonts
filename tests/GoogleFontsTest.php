@@ -27,7 +27,7 @@ class GoogleFontsTest extends TestCase
     /** @test */
     public function it_loads_google_fonts()
     {
-        $fonts = app(GoogleFonts::class)->load($this->fontsUrl, force: true);
+        $fonts = app(GoogleFonts::class)->load($this->fontsUrl, forceFresh: true);
 
         $this->assertDirectoryExists($this->localPath);
 
@@ -44,7 +44,7 @@ class GoogleFontsTest extends TestCase
     {
         config()->set('google-fonts.fallback', true);
 
-        $fonts = app(GoogleFonts::class)->load('moo', force: true);
+        $fonts = app(GoogleFonts::class)->load('moo', forceFresh: true);
 
         $this->assertDirectoryDoesNotExist($this->localPath);
 

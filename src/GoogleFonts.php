@@ -17,9 +17,9 @@ class GoogleFonts
         protected string $userAgent,
     ) {}
 
-    public function load(string $url, bool $force = false): Fonts {
+    public function load(string $url, bool $forceFresh = false): Fonts {
         try {
-            if (! $force && $fonts = $this->loadLocal($url)) {
+            if (! $forceFresh && $fonts = $this->loadLocal($url)) {
                 return $fonts;
             }
 
