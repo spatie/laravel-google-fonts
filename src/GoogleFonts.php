@@ -4,8 +4,8 @@ namespace Spatie\GoogleFonts;
 
 use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class GoogleFonts
 {
@@ -15,9 +15,11 @@ class GoogleFonts
         protected bool $inline,
         protected bool $fallback,
         protected string $userAgent,
-    ) {}
+    ) {
+    }
 
-    public function load(string $url, bool $forceDownload = false): Fonts {
+    public function load(string $url, bool $forceDownload = false): Fonts
+    {
         try {
             if (! $forceDownload && $fonts = $this->loadLocal($url)) {
                 return $fonts;

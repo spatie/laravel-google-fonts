@@ -5,9 +5,9 @@ namespace Spatie\GoogleFonts;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
+use Spatie\GoogleFonts\Commands\PrefetchGoogleFontsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Spatie\GoogleFonts\Commands\PrefetchGoogleFontsCommand;
 
 class GoogleFontsServiceProvider extends PackageServiceProvider
 {

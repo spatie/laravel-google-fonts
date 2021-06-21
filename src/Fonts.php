@@ -12,7 +12,8 @@ class Fonts implements Htmlable
         protected ?string $localizedUrl = null,
         protected ?string $localizedCss = null,
         protected bool $preferInline = false,
-    ) {}
+    ) {
+    }
 
     public function inline(): HtmlString
     {
