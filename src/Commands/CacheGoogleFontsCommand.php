@@ -32,7 +32,7 @@ class CacheGoogleFontsCommand extends Command
         $diskName = config('google-fonts.disk');
 
         if (config("filesystems.disk.{$diskName}") === null) {
-            CouldNotCacheFont::diskNotFound($diskName);
+            throw CouldNotCacheFont::diskNotFound($diskName);
         }
 
         return Storage::disk($diskName);
