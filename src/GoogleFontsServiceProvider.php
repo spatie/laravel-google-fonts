@@ -7,7 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Spatie\GoogleFonts\Commands\FetchGoogleFontsCommand;
+use Spatie\GoogleFonts\Commands\CacheGoogleFontsCommand;
 
 class GoogleFontsServiceProvider extends PackageServiceProvider
 {
@@ -16,7 +16,7 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
         $package
             ->name('google-fonts')
             ->hasConfigFile()
-            ->hasCommand(FetchGoogleFontsCommand::class);
+            ->hasCommand(CacheGoogleFontsCommand::class);
     }
 
     public function packageRegistered()

@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Fonts
+    |--------------------------------------------------------------------------
+    |
+    | Here you can register fonts that you can use in the @googlefonts Blade
+    | directive. The google-fonts:cache command will cache these fonts.
+    |
+    */
+    'fonts' => [
+        'code' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Disk
     |--------------------------------------------------------------------------
     |
