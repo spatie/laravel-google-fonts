@@ -15,7 +15,7 @@ class Fonts implements Htmlable
 
     public function inline(): HtmlString
     {
-        if (! $this->localizedUrl) {
+        if (! $this->localizedCss) {
             return $this->fallback();
         }
 
