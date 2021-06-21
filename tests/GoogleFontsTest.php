@@ -24,9 +24,7 @@ class GoogleFontsTest extends TestCase
         $this->assertMatchesFileSnapshot($fullCssPath);
 
         $woff2FileCount = collect($this->disk()->allFiles())
-            ->filter(function (string $path) {
-                return Str::endsWith($path, '.woff2');
-            })
+            ->filter(fn(string $path) => Str::endsWith($path, '.woff2'))
             ->count();
 
         $this->assertGreaterThan(0, $woff2FileCount);
