@@ -21,11 +21,15 @@ class GoogleFonts
     public function load(string $url, bool $forceDownload = false): Fonts
     {
         try {
-            if (! $forceDownload && $fonts = $this->loadLocal($url)) {
-                return $fonts;
+            if ($forceDownload) {
+                return $this->download($url);
             }
 
-            return $this->download($url);
+            $fonts = $this->loadLocal($url);
+
+            if (! $fonts) {
+                return $this->download($url);
+            }
         } catch (Exception $exception) {
             if (! $this->fallback) {
                 throw $exception;
@@ -64,13 +68,13 @@ class GoogleFonts
 
             $this->filesystem->put(
                 $this->path($url, $localizedFontUrl),
-                Http::get($fontUrl)->body()
+                Http::get($fontUrl)->body(),
             );
 
             $localizedCss = str_replace(
                 $fontUrl,
                 $this->filesystem->url($this->path($url, $localizedFontUrl)),
-                $localizedCss
+                $localizedCss,
             );
         }
 
