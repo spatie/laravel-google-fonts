@@ -17,13 +17,13 @@ class GoogleFonts
         protected string $userAgent,
     ) {}
 
-    public function load(string $url, bool $forceFresh = false): Fonts {
+    public function load(string $url, bool $forceDownload = false): Fonts {
         try {
-            if (! $forceFresh && $fonts = $this->loadLocal($url)) {
+            if (! $forceDownload && $fonts = $this->loadLocal($url)) {
                 return $fonts;
             }
 
-            return $this->loadFresh($url);
+            return $this->download($url);
         } catch (Exception $exception) {
             if (! $this->fallback) {
                 throw $exception;
@@ -49,7 +49,7 @@ class GoogleFonts
         );
     }
 
-    protected function loadFresh(string $url): Fonts
+    protected function download(string $url): Fonts
     {
         $css = Http::withHeaders(['User-Agent' => $this->userAgent])
             ->get($url)

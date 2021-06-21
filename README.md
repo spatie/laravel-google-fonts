@@ -5,13 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-google-fonts/Check%20&%20fix%20styling?label=code%20style)](https://github.com/spatie/laravel-google-fonts/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-google-fonts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-fonts)
 
-Google Fonts hosts an impressive catalog of fonts, but relying on it has its costs. By hosting fonts on an external domain, browsers need to perform an additional DNS lookup. This slows down the initial page load. In addition, you're directing your visitors to Google property, which privacy-minded users might not appreciate.
-
-You can download fonts from Google Fonts and self-host them, but it's more work than embedding a code. Keeping up with the latest font version can also be a chore.
-
-This package is an attempt to make self-hosting Google Fonts as frictionless as possible for Laravel users.
-
-To load fonts in your application, pass a Google Fonts embed URL to the `@googlefonts` Blade directive.
+This package makes self-hosting Google Fonts as frictionless as possible for Laravel users.  To load fonts in your application, pass a Google Fonts embed URL to the `@googlefonts` Blade directive.
 
 ```blade
 @googlefonts('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700display=swap')
@@ -21,13 +15,21 @@ When fonts are requested the first time, this package will scrape the CSS, fetch
 
 If anything goes wrong in this process, the package falls back to a `<link>` tag to load the fonts from Google.
 
-If you want to make sure fonts are ready to go before anyone visits your site, you can prefetch them with an artisan command.
+If you want to make sure fonts are ready to go before anyone visits your site, you can prefetch them with this artisan command.
 
 ```
-php artisan googlefonts:prefetch
+php artisan google-fonts:prefetch
 ```
 
 This command will find usages of `@googlefonts`, and cache the CSS and fonts so they're ready for use. You can commit these files in Git so the app never has to hit Google servers again.
+
+## Why we created this package
+
+Google Fonts hosts an impressive catalog of fonts, but relying on it has its costs. By hosting fonts on an external domain, browsers need to perform an additional DNS lookup. This slows down the initial page load. In addition, you're directing your visitors to Google property, which privacy-minded users might not appreciate.
+
+You can download fonts from Google Fonts and self-host them, but it's more work than embedding a code. Keeping up with the latest font version can also be a chore.
+
+This package makes self-hosting Google Fonts as frictionless as possible for Laravel users.
 
 ## Support us
 
@@ -48,13 +50,26 @@ composer require spatie/laravel-google-fonts
 You may optionally publish the config file:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\GoogleFonts\GoogleFontsServiceProvider" --tag="laravel-google-fonts-config"
+php artisan vendor:publish --provider="Spatie\GoogleFonts\GoogleFontsServiceProvider" --tag="google-fonts-config"
 ```
 
 Here's what the config file looks like:
 
 ```php
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fonts
+    |--------------------------------------------------------------------------
+    |
+    | Here you can register fonts that you can use in the @googlefonts Blade
+    | directive. The google-fonts:prefetch command will prefetch these fonts.
+    |
+    */
+    'fonts' => [
+        //'code' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +92,7 @@ return [
     |
     */
     'path' => 'fonts',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Inline
@@ -111,7 +126,6 @@ return [
     |
     */
     'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15',
-
 ];
 ```
 
@@ -123,7 +137,7 @@ To add fonts to your application, grab an embed code from Google fonts and use t
 @googlefonts('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700display=swap')
 ```
 
-This will inline the CSS so the browser needs to do one less roundtrip. If you prefer an external CSS file, you may disable the `inline` option in the package configuration.
+This will inline the CSS, so the browser needs to do one less round-trip. If you prefer an external CSS file, you may disable the `inline` option in the package configuration.
 
 Fonts are stored in a `fonts` folder on the `public` disk. You'll need to run `php artisan storage:link` to ensure the files can be served over HTTP. If you wish to store fonts in the git repository, make sure `storage/app/public` is not ignored.
 

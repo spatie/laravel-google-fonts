@@ -8,7 +8,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you can register fonts that you can use in the @googlefonts Blade
-    | directive. The google-fonts:cache command will cache these fonts.
+    | directive. The google-fonts:prefetch command will prefetch these fonts.
     |
     */
     'fonts' => [
