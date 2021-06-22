@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 class GoogleFonts
 {
@@ -15,11 +16,18 @@ class GoogleFonts
         protected bool $inline,
         protected bool $fallback,
         protected string $userAgent,
+        protected array $fonts,
     ) {
     }
 
-    public function load(string $url, bool $forceDownload = false): Fonts
+    public function load(string $font, bool $forceDownload = false): Fonts
     {
+        if (! isset($this->fonts[$font])) {
+            throw new RuntimeException("Font `{$font}` doesn't exist");
+        }
+
+        $url = $this->fonts[$font];
+
         try {
             if ($forceDownload) {
                 return $this->download($url);

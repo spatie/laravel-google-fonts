@@ -28,6 +28,7 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
                 inline: config('google-fonts.inline'),
                 fallback: config('google-fonts.fallback'),
                 userAgent: config('google-fonts.user_agent'),
+                fonts: config('google-fonts.fonts'),
             );
         });
     }

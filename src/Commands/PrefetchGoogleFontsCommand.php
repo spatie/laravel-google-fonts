@@ -16,10 +16,11 @@ class PrefetchGoogleFontsCommand extends Command
         $this->info('Starting caching Google Fonts...');
 
         collect(config('google-fonts.fonts'))
-            ->each(function (string $url) {
-                $this->info("Caching font `{$url}`...");
+            ->keys()
+            ->each(function (string $font) {
+                $this->info("Caching font `{$font}`...");
 
-                return app(GoogleFonts::class)->load($url, forceDownload: true);
+                app(GoogleFonts::class)->load($font, forceDownload: true);
             });
 
         $this->info('All done!');

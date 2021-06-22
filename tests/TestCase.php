@@ -15,8 +15,6 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->fontsUrl = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
-
         Storage::fake(config('google-fonts.disk'));
     }
 
@@ -39,6 +37,9 @@ class TestCase extends Orchestra
             ],
         ));
 
+        config()->set('google-fonts.fonts', [
+            'inter' => 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
+        ]);
         config()->set('google-fonts.disk', 'fonts');
         config()->set('google-fonts.path', '');
         config()->set('google-fonts.fallback', false);

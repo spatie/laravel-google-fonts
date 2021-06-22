@@ -7,15 +7,6 @@ use Spatie\GoogleFonts\Tests\TestCase;
 
 class PrefetchGoogleFontsCommandTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        config()->set('google-fonts.fonts', [
-            'code' => $this->fontsUrl,
-        ]);
-    }
-
     /** @test */
     public function it_can_prefetch_configured_fonts()
     {
