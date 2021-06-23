@@ -34,8 +34,6 @@ When fonts are requested the first time, this package will scrape the CSS, fetch
 
 If anything goes wrong in this process, the package falls back to a `<link>` tag to load the fonts from Google.
 
-This command will find usages of `@googlefonts`, and cache the CSS and fonts so they're ready for use. You can commit these files in Git so the app never has to hit Google servers again.
-
 ## Why we created this package
 
 Google Fonts hosts an impressive catalog of fonts, but relying on it has its costs. By hosting fonts on an external domain, browsers need to perform an additional DNS lookup. This slows down the initial page load. In addition, you're directing your visitors to Google property, which privacy-minded users might not appreciate.
