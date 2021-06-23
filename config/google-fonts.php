@@ -4,14 +4,14 @@ return [
 
     /*
      * Here you can register fonts to call from the @googlefonts Blade directive.
-     * The google-fonts:prefetch command will prefetch these fonts.
+     * The google-fonts:fetch command will prefetch these fonts.
      */
     'fonts' => [
-        // 'inter' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
+        // 'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
     ],
 
     /*
-     * Thid disk that will be used to store local Google Fonts. The public disk
+     * This disk will be used to store local Google Fonts. The public disk
      * is the default because it can be served over HTTP with storage:link.
      */
     'disk' => 'public',
@@ -32,7 +32,7 @@ return [
      * When something goes wrong fonts are loaded directly from Google.
      * With fallback disabled, this package will throw an exception.
      */
-    'fallback' => true,
+    'fallback' => ! env('APP_DEBUG'),
 
     /*
      * This user agent will be used to request the stylesheet from Google Fonts.

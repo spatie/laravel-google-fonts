@@ -14,7 +14,8 @@ This package makes self-hosting Google Fonts as frictionless as possible for Lar
 
 return [
     'fonts' => [
-        'inter' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
+        'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap',
+        'code' => 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap',
     ],
 ];
 ```
@@ -23,7 +24,11 @@ return [
 {{-- resources/views/layouts/app.blade.php --}}
 
 <head>
-    @googlefonts('inter')
+    {{-- Loads Inter --}}
+    @googlefonts
+
+    {{-- Loads IBM Plex Mono --}}
+    @googlefonts('code')
 </head>
 ```
 
@@ -70,14 +75,14 @@ return [
 
     /*
      * Here you can register fonts to call from the @googlefonts Blade directive.
-     * The google-fonts:prefetch command will prefetch these fonts.
+     * The google-fonts:fetch command will prefetch these fonts.
      */
     'fonts' => [
-        // 'sans' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
+        // 'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
     ],
 
     /*
-     * Thid disk that will be used to store local Google Fonts. The public disk
+     * This disk will be used to store local Google Fonts. The public disk
      * is the default because it can be served over HTTP with storage:link.
      */
     'disk' => 'public',
@@ -98,7 +103,7 @@ return [
      * When something goes wrong fonts are loaded directly from Google.
      * With fallback disabled, this package will throw an exception.
      */
-    'fallback' => true,
+    'fallback' => ! env('APP_DEBUG'),
 
     /*
      * This user agent will be used to request the stylesheet from Google Fonts.
@@ -108,7 +113,6 @@ return [
     'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15',
 
 ];
-
 ```
 
 ## Usage
@@ -120,7 +124,8 @@ To add fonts to your application, grab an embed code from Google fonts, register
 
 return [
     'fonts' => [
-        'inter' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
+        'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap',
+        'code' => 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap',
     ],
 ];
 ```
@@ -129,7 +134,11 @@ return [
 {{-- resources/views/layouts/app.blade.php --}}
 
 <head>
-    @googlefonts('inter')
+    {{-- Loads Inter --}}
+    @googlefonts
+
+    {{-- Loads IBM Plex Mono --}}
+    @googlefonts('code')
 </head>
 ```
 
@@ -144,7 +153,7 @@ If you want to serve fonts from a CDN, you may set up a different disk configura
 If you want to make sure fonts are ready to go before anyone visits your site, you can prefetch them with this artisan command.
 
 ```bash
-php artisan google-fonts:prefetch
+php artisan google-fonts:fetch
 ```
 
 ### Caveats for legacy browsers

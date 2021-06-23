@@ -5,7 +5,7 @@ namespace Spatie\GoogleFonts;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
-use Spatie\GoogleFonts\Commands\PrefetchGoogleFontsCommand;
+use Spatie\GoogleFonts\Commands\FetchGoogleFontsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -16,7 +16,7 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
         $package
             ->name('google-fonts')
             ->hasConfigFile()
-            ->hasCommand(PrefetchGoogleFontsCommand::class);
+            ->hasCommand(FetchGoogleFontsCommand::class);
     }
 
     public function packageRegistered()

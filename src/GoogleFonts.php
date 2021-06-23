@@ -20,7 +20,7 @@ class GoogleFonts
     ) {
     }
 
-    public function load(string $font, bool $forceDownload = false): Fonts
+    public function load(string $font = 'default', bool $forceDownload = false): Fonts
     {
         if (! isset($this->fonts[$font])) {
             throw new RuntimeException("Font `{$font}` doesn't exist");
@@ -30,14 +30,16 @@ class GoogleFonts
 
         try {
             if ($forceDownload) {
-                return $this->download($url);
+                return $this->fetch($url);
             }
 
             $fonts = $this->loadLocal($url);
 
             if (! $fonts) {
-                return $this->download($url);
+                return $this->fetch($url);
             }
+
+            return $fonts;
         } catch (Exception $exception) {
             if (! $this->fallback) {
                 throw $exception;
@@ -63,7 +65,7 @@ class GoogleFonts
         );
     }
 
-    protected function download(string $url): Fonts
+    protected function fetch(string $url): Fonts
     {
         $css = Http::withHeaders(['User-Agent' => $this->userAgent])
             ->get($url)

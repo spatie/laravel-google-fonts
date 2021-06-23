@@ -5,9 +5,9 @@ namespace Spatie\GoogleFonts\Commands;
 use Illuminate\Console\Command;
 use Spatie\GoogleFonts\GoogleFonts;
 
-class PrefetchGoogleFontsCommand extends Command
+class FetchGoogleFontsCommand extends Command
 {
-    public $signature = 'google-fonts:prefetch';
+    public $signature = 'google-fonts:fetch';
 
     public $description = 'Fetch Google Fonts and store them on a local disk';
 
