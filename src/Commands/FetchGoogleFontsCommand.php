@@ -13,12 +13,12 @@ class FetchGoogleFontsCommand extends Command
 
     public function handle()
     {
-        $this->info('Starting caching Google Fonts...');
+        $this->info('Start fetching Google Fonts...');
 
         collect(config('google-fonts.fonts'))
             ->keys()
             ->each(function (string $font) {
-                $this->info("Caching font `{$font}`...");
+                $this->info("Fetching `{$font}`...");
 
                 app(GoogleFonts::class)->load($font, forceDownload: true);
             });
