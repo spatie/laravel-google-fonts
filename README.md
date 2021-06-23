@@ -1,5 +1,3 @@
-**PACKAGE IN DEVELOPMENT, DO NOT USE YET**
-
 # Manage self-hosted Google Fonts in Laravel apps
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-google-fonts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-fonts)
