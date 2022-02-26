@@ -44,6 +44,15 @@ class Fonts implements Htmlable
         HTML);
     }
 
+    public function url(): string
+    {
+        if (! $this->localizedUrl) {
+            return $this->googleFontsUrl;
+        }
+
+        return $this->localizedUrl;
+    }
+
     public function toHtml(): HtmlString
     {
         return $this->preferInline ? $this->inline() : $this->link();
