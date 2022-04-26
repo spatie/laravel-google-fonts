@@ -31,7 +31,7 @@ class GoogleFontsTest extends TestCase
 
         $this->assertMatchesHtmlSnapshot((string)$fonts->link());
         $this->assertMatchesHtmlSnapshot((string)$fonts->inline());
-        $this->assertEquals($fullCssPath, $fonts->url());
+        $this->assertEquals($this->disk()->url($expectedFileName), $fonts->url());
     }
 
     /** @test */
@@ -53,5 +53,16 @@ class GoogleFontsTest extends TestCase
         $this->assertEquals($fallback, (string)$fonts->link());
         $this->assertEquals($fallback, (string)$fonts->inline());
         $this->assertEquals('moo', $fonts->url());
+    }
+
+    /** @test */
+    public function it_renders_non_blocking_tags()
+    {
+        config()->set('google-fonts.blocking', false);
+
+        $fonts = app(GoogleFonts::class)->load('inter', forceDownload: true);
+
+        $this->assertMatchesHtmlSnapshot((string)$fonts->link());
+        $this->assertMatchesHtmlSnapshot((string)$fonts->inline());
     }
 }

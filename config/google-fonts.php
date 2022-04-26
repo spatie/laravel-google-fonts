@@ -29,6 +29,13 @@ return [
     'inline' => true,
 
     /*
+     * By default, stylesheets are blocking and the page won't render before
+     * the fonts are loaded. However, we can speed up the initial rendering 
+     * by applying fonts after the page has loaded.
+     */
+    'blocking' => true,
+
+    /*
      * When something goes wrong fonts are loaded directly from Google.
      * With fallback disabled, this package will throw an exception.
      */
