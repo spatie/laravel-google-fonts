@@ -60,7 +60,6 @@ class GoogleFontsTest extends TestCase
     {
         config()->set('google-fonts.blocking', false);
 
-        app()->forgetInstance(GoogleFonts::class);
         $fonts = app(GoogleFonts::class)->load('inter', forceDownload: true);
 
         $this->assertMatchesHtmlSnapshot((string)$fonts->link());
