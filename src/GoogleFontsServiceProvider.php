@@ -26,6 +26,7 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
                 filesystem: $app->make(FilesystemManager::class)->disk(config('google-fonts.disk')),
                 path: config('google-fonts.path'),
                 inline: config('google-fonts.inline'),
+                blocking: config('google-fonts.blocking', true),
                 fallback: config('google-fonts.fallback'),
                 userAgent: config('google-fonts.user_agent'),
                 fonts: config('google-fonts.fonts'),
