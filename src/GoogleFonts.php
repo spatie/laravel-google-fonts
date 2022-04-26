@@ -118,6 +118,10 @@ class GoogleFonts
 
     protected function path(string $url, string $path = ''): string
     {
-        return $this->path . '/' . substr(md5($url), 0, 10) . '/' . $path;
+        return join('/', array_filter([
+            $this->path,
+            substr(md5($url), 0, 10),
+            $path
+        ]));
     }
 }
