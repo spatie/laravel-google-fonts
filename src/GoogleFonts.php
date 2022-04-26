@@ -14,6 +14,7 @@ class GoogleFonts
         protected Filesystem $filesystem,
         protected string $path,
         protected bool $inline,
+        protected bool $blocking,
         protected bool $fallback,
         protected string $userAgent,
         protected array $fonts,
@@ -62,6 +63,7 @@ class GoogleFonts
             localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
             localizedCss: $localizedCss,
             preferInline: $this->inline,
+            blocking: $this->blocking,
         );
     }
 
@@ -95,6 +97,7 @@ class GoogleFonts
             localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
             localizedCss: $localizedCss,
             preferInline: $this->inline,
+            blocking: $this->blocking,
         );
     }
 

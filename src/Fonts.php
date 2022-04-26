@@ -12,35 +12,40 @@ class Fonts implements Htmlable
         protected ?string $localizedUrl = null,
         protected ?string $localizedCss = null,
         protected bool $preferInline = false,
+        protected bool $blocking = true,
     ) {
     }
 
     public function inline(): HtmlString
     {
         if (! $this->localizedCss) {
-            return $this->fallback();
+            return $this->link();
+        }
+
+        if ($this->blocking) {
+            return new HtmlString(<<<HTML
+                <style type="text/css">{$this->localizedCss}</style>
+            HTML);
         }
 
         return new HtmlString(<<<HTML
-            <style>{$this->localizedCss}</style>
+            <style media="print" type="text/css" onload="this.onload=null;this.removeAttribute('media');">{$this->localizedCss}</style>
         HTML);
     }
 
     public function link(): HtmlString
     {
-        if (! $this->localizedUrl) {
-            return $this->fallback();
+        $url = $this->url();
+
+        if ($this->blocking) {
+            return new HtmlString(<<<HTML
+                <link href="{$url}" rel="stylesheet" type="text/css">
+            HTML);
         }
 
         return new HtmlString(<<<HTML
-            <link href="{$this->localizedUrl}" rel="stylesheet" type="text/css">
-        HTML);
-    }
-
-    public function fallback(): HtmlString
-    {
-        return new HtmlString(<<<HTML
-            <link href="{$this->googleFontsUrl}" rel="stylesheet" type="text/css">
+            <link href="{$url}" rel="preload" as="style">
+            <link href="{$url}" rel="stylesheet" media="print" type="text/css" onload="this.onload=null;this.removeAttribute('media');">
         HTML);
     }
 
