@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-fonts` will be documented in this file.
 
+## 1.2.1 - 2022-09-07
+
+### What's Changed
+
+- Fix tests and avoid double slashes in public urls by @fjahn in https://github.com/spatie/laravel-google-fonts/pull/28
+
+### New Contributors
+
+- @fjahn made their first contribution in https://github.com/spatie/laravel-google-fonts/pull/28
+
+**Full Changelog**: https://github.com/spatie/laravel-google-fonts/compare/1.2.0...1.2.1
+
 ## 1.2.0 - 2022-02-28
 
 ## What's Changed
