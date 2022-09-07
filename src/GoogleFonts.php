@@ -5,10 +5,8 @@ namespace Spatie\GoogleFonts;
 use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use RuntimeException;
-use Symfony\Component\HttpFoundation\UrlHelper;
 
 class GoogleFonts
 {
@@ -122,6 +120,7 @@ class GoogleFonts
             substr(md5($url), 0, 10),
             $path,
         ]);
+
         return $segments->filter()->join('/');
     }
 }
