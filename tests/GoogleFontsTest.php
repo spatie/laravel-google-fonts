@@ -31,7 +31,9 @@ class GoogleFontsTest extends TestCase
 
         $this->assertMatchesHtmlSnapshot((string)$fonts->link());
         $this->assertMatchesHtmlSnapshot((string)$fonts->inline());
-        $this->assertEquals($fullCssPath, $fonts->url());
+
+        $expectedUrl = $this->disk()->url($expectedFileName);
+        $this->assertEquals($expectedUrl, $fonts->url());
     }
 
     /** @test */
