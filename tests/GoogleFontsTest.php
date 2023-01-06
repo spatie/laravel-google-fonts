@@ -46,7 +46,7 @@ it('falls back to google fonts', function () {
 
     expect([
         (string)$fonts->link(),
-        (string)$fonts->inline()
+        (string)$fonts->inline(),
     ])->each->toEqual($fallback)
         ->and($fonts->url())->toEqual('moo');
 });
