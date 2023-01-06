@@ -32,7 +32,6 @@
         "nunomaduro/collision": "^5.4|^6.0",
         "orchestra/testbench": "^6.17|^7.0",
         "pestphp/pest": "^1.22",
-        "phpunit/phpunit": "^9.5",
         "spatie/laravel-ray": "^1.17",
         "spatie/pest-plugin-snapshots": "^1.1",
         "spatie/phpunit-snapshot-assertions": "^4.2"
@@ -49,8 +48,8 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/testbench package:test --parallel --no-coverage",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test": "./vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage-html coverage"
     },
     "config": {
         "sort-packages": true,
