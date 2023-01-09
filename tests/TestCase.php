@@ -11,7 +11,7 @@ class TestCase extends Orchestra
 {
     protected string $fontsUrl;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -30,8 +30,8 @@ class TestCase extends Orchestra
             [
                 'fonts' => [
                     'driver' => 'local',
-                    'root' => __DIR__.'/fonts',
-                    'url' => env('APP_URL').'/storage',
+                    'root' => __DIR__ . '/fonts',
+                    'url' => env('APP_URL') . '/storage',
                     'visibility' => 'public',
                 ],
             ],
