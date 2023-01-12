@@ -7,7 +7,7 @@ use function Spatie\Snapshots\assertMatchesFileSnapshot;
 use function Spatie\Snapshots\assertMatchesHtmlSnapshot;
 
 it('loads google fonts', function () {
-    $fonts = app(GoogleFonts::class)->load('inter', forceDownload: true);
+    $fonts = app(GoogleFonts::class)->load(['font' => 'inter'], forceDownload: true);
 
     $expectedFileName = '952ee985ef/fonts.css';
 
@@ -34,7 +34,7 @@ it('falls back to google fonts', function () {
     config()->set('google-fonts.fonts', ['cow' => 'moo']);
     config()->set('google-fonts.fallback', true);
 
-    $fonts = app(GoogleFonts::class)->load('cow', forceDownload: true);
+    $fonts = app(GoogleFonts::class)->load(['font' => 'cow'], forceDownload: true);
 
     $allFiles = $this->disk()->allFiles();
 
@@ -49,4 +49,16 @@ it('falls back to google fonts', function () {
         (string)$fonts->inline(),
     ])->each->toEqual($fallback)
         ->and($fonts->url())->toEqual('moo');
+});
+
+it('adds the nonce attribute when specified', function () {
+    config()->set('google-fonts.fonts', ['cow' => 'moo']);
+    config()->set('google-fonts.fallback', true);
+
+    $fonts = app(GoogleFonts::class)->load(['font' => 'cow', 'nonce' => 'chicken'], forceDownload: true);
+
+    expect([
+        (string)$fonts->link(),
+        (string)$fonts->inline(),
+    ])->each->toContain('nonce="chicken"');
 });

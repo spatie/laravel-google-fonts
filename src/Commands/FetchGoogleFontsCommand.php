@@ -20,7 +20,7 @@ class FetchGoogleFontsCommand extends Command
             ->each(function (string $font) {
                 $this->info("Fetching `{$font}`...");
 
-                app(GoogleFonts::class)->load($font, forceDownload: true);
+                app(GoogleFonts::class)->load(compact('font'), forceDownload: true);
             });
 
         $this->info('All done!');

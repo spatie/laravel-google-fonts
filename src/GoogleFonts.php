@@ -20,8 +20,10 @@ class GoogleFonts
     ) {
     }
 
-    public function load(string $font = 'default', bool $forceDownload = false): Fonts
+    public function load(array $options = [], bool $forceDownload = false): Fonts
     {
+        ['font' => $font, 'nonce' => $nonce] = $this->parseOptions($options);
+
         if (! isset($this->fonts[$font])) {
             throw new RuntimeException("Font `{$font}` doesn't exist");
         }
@@ -30,13 +32,13 @@ class GoogleFonts
 
         try {
             if ($forceDownload) {
-                return $this->fetch($url);
+                return $this->fetch($url, $nonce);
             }
 
-            $fonts = $this->loadLocal($url);
+            $fonts = $this->loadLocal($url, $nonce);
 
             if (! $fonts) {
-                return $this->fetch($url);
+                return $this->fetch($url, $nonce);
             }
 
             return $fonts;
@@ -45,11 +47,11 @@ class GoogleFonts
                 throw $exception;
             }
 
-            return new Fonts(googleFontsUrl: $url);
+            return new Fonts(googleFontsUrl: $url, nonce: $nonce);
         }
     }
 
-    protected function loadLocal(string $url): ?Fonts
+    protected function loadLocal(string $url, ?string $nonce): ?Fonts
     {
         if (! $this->filesystem->exists($this->path($url, 'fonts.css'))) {
             return null;
@@ -61,11 +63,12 @@ class GoogleFonts
             googleFontsUrl: $url,
             localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
             localizedCss: $localizedCss,
+            nonce: $nonce,
             preferInline: $this->inline,
         );
     }
 
-    protected function fetch(string $url): Fonts
+    protected function fetch(string $url, ?string $nonce): Fonts
     {
         $css = Http::withHeaders(['User-Agent' => $this->userAgent])
             ->get($url)
@@ -94,6 +97,7 @@ class GoogleFonts
             googleFontsUrl: $url,
             localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
             localizedCss: $localizedCss,
+            nonce: $nonce,
             preferInline: $this->inline,
         );
     }
@@ -122,5 +126,13 @@ class GoogleFonts
         ]);
 
         return $segments->filter()->join('/');
+    }
+
+    protected function parseOptions(array $options): array
+    {
+        return [
+            'font' => $options['font'] ?? 'default',
+            'nonce' => $options['nonce'] ?? null,
+        ];
     }
 }
