@@ -135,7 +135,7 @@ return [
 <head>
     {{-- Loads Inter --}}
     @googlefonts
-
+    
     {{-- Loads IBM Plex Mono --}}
     @googlefonts('code')
 </head>
@@ -153,6 +153,22 @@ If you want to make sure fonts are ready to go before anyone visits your site, y
 
 ```bash
 php artisan google-fonts:fetch
+```
+
+## Usage with spatie/laravel-csp
+
+If you're using [spatie/laravel-csp](https://github.com/spatie/laravel-csp) to manage your Content Security Policy, you can pass an array to the blade directive and add the `nonce` option.
+
+```blade
+{{-- resources/views/layouts/app.blade.php --}}
+
+<head>
+    {{-- Loads Inter --}}
+    @googlefonts(['nonce' => csp_nonce()])
+
+    {{-- Loads IBM Plex Mono --}}
+    @googlefonts(['font' => 'code', 'nonce' => csp_nonce()])
+</head>
 ```
 
 ### Caveats for legacy browsers
