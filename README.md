@@ -29,7 +29,7 @@ return [
     @googlefonts
 
     {{-- Loads IBM Plex Mono --}}
-    @googlefonts(['font' => 'code'])
+    @googlefonts('code')
 </head>
 ```
 
@@ -135,9 +135,9 @@ return [
 <head>
     {{-- Loads Inter --}}
     @googlefonts
-
+    
     {{-- Loads IBM Plex Mono --}}
-    @googlefonts(['font' => 'code'])
+    @googlefonts('code')
 </head>
 ```
 
@@ -157,7 +157,7 @@ php artisan google-fonts:fetch
 
 ## Usage with spatie/laravel-csp
 
-If you're using [spatie/laravel-csp](https://github.com/spatie/laravel-csp) to manage your Content Security Policy, you can add the `nonce` option to the blade directive.
+If you're using [spatie/laravel-csp](https://github.com/spatie/laravel-csp) to manage your Content Security Policy, you can pass an array to the blade directive and add the `nonce` option.
 
 ```blade
 {{-- resources/views/layouts/app.blade.php --}}

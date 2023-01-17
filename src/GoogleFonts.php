@@ -20,11 +20,11 @@ class GoogleFonts
     ) {
     }
 
-    public function load(array $options = [], bool $forceDownload = false): Fonts
+    public function load(string|array $options = [], bool $forceDownload = false): Fonts
     {
         ['font' => $font, 'nonce' => $nonce] = $this->parseOptions($options);
 
-        if (! isset($this->fonts[$font])) {
+        if (!isset($this->fonts[$font])) {
             throw new RuntimeException("Font `{$font}` doesn't exist");
         }
 
@@ -37,13 +37,13 @@ class GoogleFonts
 
             $fonts = $this->loadLocal($url, $nonce);
 
-            if (! $fonts) {
+            if (!$fonts) {
                 return $this->fetch($url, $nonce);
             }
 
             return $fonts;
         } catch (Exception $exception) {
-            if (! $this->fallback) {
+            if (!$this->fallback) {
                 throw $exception;
             }
 
@@ -53,7 +53,7 @@ class GoogleFonts
 
     protected function loadLocal(string $url, ?string $nonce): ?Fonts
     {
-        if (! $this->filesystem->exists($this->path($url, 'fonts.css'))) {
+        if (!$this->filesystem->exists($this->path($url, 'fonts.css'))) {
             return null;
         }
 
@@ -128,8 +128,12 @@ class GoogleFonts
         return $segments->filter()->join('/');
     }
 
-    protected function parseOptions(array $options): array
+    protected function parseOptions(string|array $options): array
     {
+        if (is_string($options)) {
+            $options = ['font' => $options, 'nonce' => null];
+        }
+
         return [
             'font' => $options['font'] ?? 'default',
             'nonce' => $options['nonce'] ?? null,
