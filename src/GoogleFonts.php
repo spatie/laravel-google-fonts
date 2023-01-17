@@ -24,7 +24,7 @@ class GoogleFonts
     {
         ['font' => $font, 'nonce' => $nonce] = $this->parseOptions($options);
 
-        if (!isset($this->fonts[$font])) {
+        if (! isset($this->fonts[$font])) {
             throw new RuntimeException("Font `{$font}` doesn't exist");
         }
 
@@ -37,13 +37,13 @@ class GoogleFonts
 
             $fonts = $this->loadLocal($url, $nonce);
 
-            if (!$fonts) {
+            if (! $fonts) {
                 return $this->fetch($url, $nonce);
             }
 
             return $fonts;
         } catch (Exception $exception) {
-            if (!$this->fallback) {
+            if (! $this->fallback) {
                 throw $exception;
             }
 
@@ -53,7 +53,7 @@ class GoogleFonts
 
     protected function loadLocal(string $url, ?string $nonce): ?Fonts
     {
-        if (!$this->filesystem->exists($this->path($url, 'fonts.css'))) {
+        if (! $this->filesystem->exists($this->path($url, 'fonts.css'))) {
             return null;
         }
 

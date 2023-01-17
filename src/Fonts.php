@@ -14,13 +14,12 @@ class Fonts implements Htmlable
         protected ?string $localizedCss = null,
         protected ?string $nonce = null,
         protected bool    $preferInline = false,
-    )
-    {
+    ) {
     }
 
     public function inline(): HtmlString
     {
-        if (!$this->localizedCss) {
+        if (! $this->localizedCss) {
             return $this->fallback();
         }
 
@@ -35,7 +34,7 @@ class Fonts implements Htmlable
 
     public function link(): HtmlString
     {
-        if (!$this->localizedUrl) {
+        if (! $this->localizedUrl) {
             return $this->fallback();
         }
 
@@ -67,7 +66,7 @@ class Fonts implements Htmlable
 
     public function url(): string
     {
-        if (!$this->localizedUrl) {
+        if (! $this->localizedUrl) {
             return $this->googleFontsUrl;
         }
 

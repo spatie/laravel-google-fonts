@@ -6,7 +6,6 @@ use Spatie\GoogleFonts\GoogleFonts;
 use function Spatie\Snapshots\assertMatchesFileSnapshot;
 use function Spatie\Snapshots\assertMatchesHtmlSnapshot;
 
-
 it('loads google fonts', function ($arguments) {
     $fonts = app(GoogleFonts::class)->load($arguments, forceDownload: true);
 
@@ -57,7 +56,8 @@ it('falls back to google fonts', function ($arguments) {
     ->with([
         'font_as_string' => 'cow',
         'font_as_array' => ['font' => 'cow'],
-    ]);;
+    ]);
+    ;
 
 it('adds the nonce attribute when specified', function () {
     config()->set('google-fonts.fonts', ['cow' => 'moo']);
