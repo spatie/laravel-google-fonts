@@ -57,7 +57,7 @@ it('falls back to google fonts', function ($arguments) {
         'font_as_string' => 'cow',
         'font_as_array' => ['font' => 'cow'],
     ]);
-    ;
+;
 
 it('adds the nonce attribute when specified', function () {
     config()->set('google-fonts.fonts', ['cow' => 'moo']);
