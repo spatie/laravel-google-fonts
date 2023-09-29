@@ -15,8 +15,8 @@ This package makes self-hosting Google Fonts as frictionless as possible for Lar
 
 return [
     'fonts' => [
-        'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap',
-        'code' => 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap',
+        'default' => 'https://fonts.bunny.net/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap',
+        'code' => 'https://fonts.bunny.net/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap',
     ],
 ];
 ```
@@ -77,7 +77,7 @@ return [
      * The google-fonts:fetch command will prefetch these fonts.
      */
     'fonts' => [
-        'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
+        'default' => 'https://fonts.bunny.net/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700',
     ],
 
     /*
@@ -123,8 +123,8 @@ To add fonts to your application, grab an embed code from Google fonts, register
 
 return [
     'fonts' => [
-        'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap',
-        'code' => 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap',
+        'default' => 'https://fonts.bunny.net/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap',
+        'code' => 'https://fonts.bunny.net/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap',
     ],
 ];
 ```

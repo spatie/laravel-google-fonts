@@ -38,7 +38,7 @@ class TestCase extends Orchestra
         ));
 
         config()->set('google-fonts.fonts', [
-            'inter' => 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
+            'inter' => 'https://fonts.bunny.net/css2?family=Inter:wght@400;700&display=swap',
         ]);
         config()->set('google-fonts.disk', 'fonts');
         config()->set('google-fonts.path', '');
