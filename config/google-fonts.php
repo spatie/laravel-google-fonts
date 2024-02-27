@@ -29,6 +29,13 @@ return [
     'inline' => true,
 
     /*
+     * When preload is set to true, preload meta tags will be generated
+     * in the HTML output to instruct the browser to start fetching the
+     * font files as early as possible, even before the CSS is fully parsed.
+     */
+    'preload' => false,
+
+    /*
      * When something goes wrong fonts are loaded directly from Google.
      * With fallback disabled, this package will throw an exception.
      */

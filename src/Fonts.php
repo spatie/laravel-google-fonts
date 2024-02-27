@@ -9,11 +9,13 @@ use Illuminate\Support\HtmlString;
 class Fonts implements Htmlable
 {
     public function __construct(
-        protected string  $googleFontsUrl,
-        protected ?string $localizedUrl = null,
-        protected ?string $localizedCss = null,
-        protected ?string $nonce = null,
-        protected bool    $preferInline = false,
+        protected string    $googleFontsUrl,
+        protected ?string   $localizedUrl = null,
+        protected ?string   $localizedCss = null,
+        protected ?string   $nonce = null,
+        protected bool      $preferInline = false,
+        protected ?string   $preloadMeta = null,
+        protected bool      $preload = false,
     ) {
     }
 
@@ -27,7 +29,14 @@ class Fonts implements Htmlable
             'nonce' => $this->nonce ?? false,
         ]);
 
+        $preloadMeta = '';
+        if ($this->preload){
+            $preloadMeta = $this->preloadMeta;
+
+        }
+
         return new HtmlString(<<<HTML
+            {$preloadMeta}
             <style {$attributes->implode(' ')}>{$this->localizedCss}</style>
         HTML);
     }
@@ -45,7 +54,13 @@ class Fonts implements Htmlable
             'nonce' => $this->nonce ?? false,
         ]);
 
+        $preloadMeta = '';
+        if ($this->preload){
+            $preloadMeta = $this->preloadMeta;
+
+        }
         return new HtmlString(<<<HTML
+            {$preloadMeta}
             <link {$attributes->implode(' ')}>
         HTML);
     }
@@ -58,6 +73,14 @@ class Fonts implements Htmlable
             'type' => 'text/css',
             'nonce' => $this->nonce ?? false,
         ]);
+
+        if ($this->preload){
+            return new HtmlString(<<<HTML
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link {$attributes->implode(' ')}>
+            HTML);
+        }
 
         return new HtmlString(<<<HTML
             <link {$attributes->implode(' ')}>
