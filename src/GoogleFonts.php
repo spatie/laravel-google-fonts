@@ -94,11 +94,11 @@ class GoogleFonts
                 Http::get($fontUrl)->body(),
             );
 
-            $url = $this->filesystem->url($this->path($url, $localizedFontUrl));
+            $localizedUrl = $this->filesystem->url($this->path($url, $localizedFontUrl));
             $preloadMeta .= $this->getPreload($url) . "\n";
             $localizedCss = str_replace(
                 $fontUrl,
-                $url,
+                $localizedUrl,
                 $localizedCss,
             );
         }
