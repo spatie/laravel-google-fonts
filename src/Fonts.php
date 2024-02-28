@@ -9,13 +9,13 @@ use Illuminate\Support\HtmlString;
 class Fonts implements Htmlable
 {
     public function __construct(
-        protected string    $googleFontsUrl,
-        protected ?string   $localizedUrl = null,
-        protected ?string   $localizedCss = null,
-        protected ?string   $nonce = null,
-        protected bool      $preferInline = false,
-        protected ?string   $preloadMeta = null,
-        protected bool      $preload = false,
+        protected string  $googleFontsUrl,
+        protected ?string $localizedUrl = null,
+        protected ?string $localizedCss = null,
+        protected ?string $nonce = null,
+        protected bool    $preferInline = false,
+        protected ?string $preloadMeta = null,
+        protected bool    $preload = false,
     ) {
     }
 

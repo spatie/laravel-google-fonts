@@ -62,8 +62,8 @@ class GoogleFonts
 
 
         $preloadMeta = null;
-        if ( $this->filesystem->exists($this->path($url, 'preload.txt'))) {
-            $preloadMeta = $this->filesystem->get($this->path($url, 'preload.txt'));
+        if ( $this->filesystem->exists($this->path($url, 'preload.html'))) {
+            $preloadMeta = $this->filesystem->get($this->path($url, 'preload.html'));
         }
 
         return new Fonts(
@@ -104,7 +104,7 @@ class GoogleFonts
         }
 
         $this->filesystem->put($this->path($url, 'fonts.css'), $localizedCss);
-        $this->filesystem->put($this->path($url, 'preload.txt'), $preloadMeta);
+        $this->filesystem->put($this->path($url, 'preload.html'), $preloadMeta);
 
         return new Fonts(
             googleFontsUrl: $url,
