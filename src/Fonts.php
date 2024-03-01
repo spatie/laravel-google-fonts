@@ -30,7 +30,7 @@ class Fonts implements Htmlable
         ]);
 
         $preloadMeta = '';
-        if ($this->preload){
+        if ($this->preload) {
             $preloadMeta = $this->preloadMeta;
 
         }
@@ -55,10 +55,11 @@ class Fonts implements Htmlable
         ]);
 
         $preloadMeta = '';
-        if ($this->preload){
+        if ($this->preload) {
             $preloadMeta = $this->preloadMeta;
 
         }
+
         return new HtmlString(<<<HTML
             {$preloadMeta}
             <link {$attributes->implode(' ')}>
@@ -74,7 +75,7 @@ class Fonts implements Htmlable
             'nonce' => $this->nonce ?? false,
         ]);
 
-        if ($this->preload){
+        if ($this->preload) {
             return new HtmlString(<<<HTML
                 <link rel="preconnect" href="https://fonts.googleapis.com">
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

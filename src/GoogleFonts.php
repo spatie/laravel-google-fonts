@@ -62,7 +62,7 @@ class GoogleFonts
 
 
         $preloadMeta = null;
-        if ( $this->filesystem->exists($this->path($url, 'preload.html'))) {
+        if ($this->filesystem->exists($this->path($url, 'preload.html'))) {
             $preloadMeta = $this->filesystem->get($this->path($url, 'preload.html'));
         }
 
@@ -157,6 +157,6 @@ class GoogleFonts
 
     public function getPreload(string $url)
     {
-       return sprintf('<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>', $url);
+        return sprintf('<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>', $url);
     }
 }
