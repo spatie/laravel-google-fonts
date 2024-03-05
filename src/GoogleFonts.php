@@ -17,6 +17,7 @@ class GoogleFonts
         protected bool $fallback,
         protected string $userAgent,
         protected array $fonts,
+        protected bool $preload,
     ) {
     }
 
@@ -59,12 +60,20 @@ class GoogleFonts
 
         $localizedCss = $this->filesystem->get($this->path($url, 'fonts.css'));
 
+
+        $preloadMeta = null;
+        if ($this->filesystem->exists($this->path($url, 'preload.html'))) {
+            $preloadMeta = $this->filesystem->get($this->path($url, 'preload.html'));
+        }
+
         return new Fonts(
             googleFontsUrl: $url,
             localizedUrl: $this->filesystem->url($this->path($url, 'fonts.css')),
             localizedCss: $localizedCss,
             nonce: $nonce,
             preferInline: $this->inline,
+            preloadMeta: $preloadMeta,
+            preload: $this->preload
         );
     }
 
@@ -75,6 +84,7 @@ class GoogleFonts
             ->body();
 
         $localizedCss = $css;
+        $preloadMeta = '';
 
         foreach ($this->extractFontUrls($css) as $fontUrl) {
             $localizedFontUrl = $this->localizeFontUrl($fontUrl);
@@ -84,14 +94,17 @@ class GoogleFonts
                 Http::get($fontUrl)->body(),
             );
 
+            $localizedUrl = $this->filesystem->url($this->path($url, $localizedFontUrl));
+            $preloadMeta .= $this->getPreload($url) . "\n";
             $localizedCss = str_replace(
                 $fontUrl,
-                $this->filesystem->url($this->path($url, $localizedFontUrl)),
+                $localizedUrl,
                 $localizedCss,
             );
         }
 
         $this->filesystem->put($this->path($url, 'fonts.css'), $localizedCss);
+        $this->filesystem->put($this->path($url, 'preload.html'), $preloadMeta);
 
         return new Fonts(
             googleFontsUrl: $url,
@@ -99,6 +112,8 @@ class GoogleFonts
             localizedCss: $localizedCss,
             nonce: $nonce,
             preferInline: $this->inline,
+            preloadMeta: $preloadMeta,
+            preload: $this->preload
         );
     }
 
@@ -138,5 +153,10 @@ class GoogleFonts
             'font' => $options['font'] ?? 'default',
             'nonce' => $options['nonce'] ?? null,
         ];
+    }
+
+    public function getPreload(string $url)
+    {
+        return sprintf('<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>', $url);
     }
 }
