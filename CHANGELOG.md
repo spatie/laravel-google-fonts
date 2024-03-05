@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-fonts` will be documented in this file.
 
+## 1.3.0 - 2024-03-05
+
+### What's Changed
+
+* Add support preload fonts by @hasan-ahani in https://github.com/spatie/laravel-google-fonts/pull/42
+
+### New Contributors
+
+* @hasan-ahani made their first contribution in https://github.com/spatie/laravel-google-fonts/pull/42
+
+**Full Changelog**: https://github.com/spatie/laravel-google-fonts/compare/1.2.3...1.3.0
+
 ## 1.2.3 - 2023-01-24
 
 ### What's Changed
