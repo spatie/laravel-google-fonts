@@ -29,7 +29,7 @@ class GoogleFontsServiceProvider extends PackageServiceProvider
                 fallback: config('google-fonts.fallback'),
                 userAgent: config('google-fonts.user_agent'),
                 fonts: config('google-fonts.fonts'),
-                preload: config('google-fonts.preload'),
+                preload: config('google-fonts.preload', false),
             );
         });
     }
