@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-google-fonts` will be documented in this file.
 
+## 1.3.1 - 2024-03-06
+
+Hotfix for the previous release.
+
+**Full Changelog**: https://github.com/spatie/laravel-google-fonts/compare/1.3.0...1.3.1
+
 ## 1.3.0 - 2024-03-05
 
 ### What's Changed
