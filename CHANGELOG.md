@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-google-fonts` will be documented in this file.
 
+## 1.4.0 - 2024-03-08
+
+### What's Changed
+
+* Laravel 11.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-google-fonts/pull/43
+
+**Full Changelog**: https://github.com/spatie/laravel-google-fonts/compare/1.3.1...1.4.0
+
 ## 1.3.1 - 2024-03-06
 
 Hotfix for the previous release.
