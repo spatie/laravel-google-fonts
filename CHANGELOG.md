@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-fonts` will be documented in this file.
 
+## 1.4.1 - 2024-03-14
+
+### What's Changed
+
+* Fix issues with font URLs without a ".woff2" extension. by @MrMage in https://github.com/spatie/laravel-google-fonts/pull/48
+
+### New Contributors
+
+* @MrMage made their first contribution in https://github.com/spatie/laravel-google-fonts/pull/48
+
+**Full Changelog**: https://github.com/spatie/laravel-google-fonts/compare/1.4.0...1.4.1
+
 ## 1.4.0 - 2024-03-08
 
 ### What's Changed
