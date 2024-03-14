@@ -127,7 +127,12 @@ class GoogleFonts
 
     protected function localizeFontUrl(string $path): string
     {
-        [$path, $extension] = explode('.', str_replace('https://fonts.gstatic.com/', '', $path));
+        // Google Fonts seem to have recently changed their URL structure to one that no longer contains a file
+        // extension (see https://github.com/spatie/laravel-google-fonts/issues/40). We account for that by falling back
+        // to 'woff2' in that case.
+        $pathComponents = explode('.', str_replace('https://fonts.gstatic.com/', '', $path));
+        $path = $pathComponents[0];
+        $extension = $pathComponents[1] ?? 'woff2';
 
         return implode('.', [Str::slug($path), $extension]);
     }
