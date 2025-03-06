@@ -122,7 +122,7 @@ class GoogleFonts
         $matches = [];
         preg_match_all('/url\((https:\/\/fonts.gstatic.com\/[^)]+)\)/', $css, $matches);
 
-        return $matches[1] ?? [];
+        return array_unique($matches[1] ?? []);
     }
 
     protected function localizeFontUrl(string $path): string
