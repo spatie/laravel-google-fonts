@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-fonts` will be documented in this file.
 
+## 1.4.3 - 2025-03-08
+
+### What's Changed
+
+* Remove duplicate matched URLs by @JayBizzle in https://github.com/spatie/laravel-google-fonts/pull/54
+
+### New Contributors
+
+* @JayBizzle made their first contribution in https://github.com/spatie/laravel-google-fonts/pull/54
+
+**Full Changelog**: https://github.com/spatie/laravel-google-fonts/compare/1.4.2...1.4.3
+
 ## 1.4.2 - 2025-02-17
 
 ### What's Changed
