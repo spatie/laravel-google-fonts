@@ -4,7 +4,7 @@
 [![run-tests](https://github.com/spatie/laravel-google-fonts/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-google-fonts/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-google-fonts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-fonts)
 
-This package makes self-hosting Google Fonts as frictionless as possible for Laravel use``rs.  To load fonts in your application, register a Google Fonts embed URL and load it with the `@googlefonts` Blade directive.
+This package makes self-hosting Google Fonts as frictionless as possible for Laravel users.  To load fonts in your application, register a Google Fonts embed URL and load it with the `@googlefonts` Blade directive.
 
 ```php
 // config/google-fonts.php
