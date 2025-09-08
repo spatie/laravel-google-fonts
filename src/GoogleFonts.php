@@ -95,7 +95,7 @@ class GoogleFonts
             );
 
             $localizedUrl = $this->filesystem->url($this->path($url, $localizedFontUrl));
-            $preloadMeta .= $this->getPreload($url) . "\n";
+            $preloadMeta .= $this->getPreload($localizedUrl) . "\n";
             $localizedCss = str_replace(
                 $fontUrl,
                 $localizedUrl,
