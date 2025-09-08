@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-google-fonts` will be documented in this file.
 
+## 1.4.4 - 2025-09-08
+
+### What's Changed
+
+* Update README.md fix small typo by @eugenefvdm in https://github.com/spatie/laravel-google-fonts/pull/55
+* Fix: preload tags now reference localized font files instead of Google Fonts URL by @Gamzky in https://github.com/spatie/laravel-google-fonts/pull/56
+
+### New Contributors
+
+* @eugenefvdm made their first contribution in https://github.com/spatie/laravel-google-fonts/pull/55
+* @Gamzky made their first contribution in https://github.com/spatie/laravel-google-fonts/pull/56
+
+**Full Changelog**: https://github.com/spatie/laravel-google-fonts/compare/1.4.3...1.4.4
+
 ## 1.4.3 - 2025-03-08
 
 ### What's Changed
