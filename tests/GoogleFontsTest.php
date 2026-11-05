@@ -17,11 +17,14 @@ it('loads google fonts as string', function () {
 
     assertMatchesFileSnapshot($fullCssPath);
 
-    $woff2FileCount = collect($this->disk()->allFiles())
-        ->filter(fn (string $path) => Str::endsWith($path, '.woff2'))
-        ->count();
+    $woff2Files = collect($this->disk()->allFiles())
+        ->filter(fn (string $path) => Str::endsWith($path, '.woff2'));
 
-    expect($woff2FileCount)->toBeGreaterThan(0);
+    expect($woff2Files)->toHaveCount(7);
+
+    foreach ($woff2Files as $path) {
+        expect($this->disk()->get($path))->toBe('font-bytes');
+    }
 
     assertMatchesHtmlSnapshot((string) $fonts->link());
     assertMatchesHtmlSnapshot((string) $fonts->inline());
@@ -41,11 +44,14 @@ it('loads google fonts as array', function () {
 
     assertMatchesFileSnapshot($fullCssPath);
 
-    $woff2FileCount = collect($this->disk()->allFiles())
-        ->filter(fn (string $path) => Str::endsWith($path, '.woff2'))
-        ->count();
+    $woff2Files = collect($this->disk()->allFiles())
+        ->filter(fn (string $path) => Str::endsWith($path, '.woff2'));
 
-    expect($woff2FileCount)->toBeGreaterThan(0);
+    expect($woff2Files)->toHaveCount(7);
+
+    foreach ($woff2Files as $path) {
+        expect($this->disk()->get($path))->toBe('font-bytes');
+    }
 
     assertMatchesHtmlSnapshot((string) $fonts->link());
     assertMatchesHtmlSnapshot((string) $fonts->inline());
